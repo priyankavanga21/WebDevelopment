@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Web Dev Challenge</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f9f9f9;
+    }
+
+    header {
+      background: #4CAF50;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    form {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    form h2 {
+      margin-bottom: 1rem;
+      color: #333;
+    }
+
+    label {
+      display: block;
+      margin: 0.5rem 0 0.2rem;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 0.6rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    button {
+      padding: 0.6rem 1.2rem;
+      border: none;
+      background: #4CAF50;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    #formMessage {
+      color: green;
+      margin-top: 10px;
+      display: none;
+    }
+
+    .todo {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .todo h2 {
+      margin-bottom: 1rem;
+      color: #333;
+    }
+
+    .todo input {
+      width: 70%;
+      margin-right: 10px;
+    }
+
+    ul {
+      margin-top: 1rem;
+      list-style: none;
+    }
+
+    li {
+      margin: 0.5rem 0;
+      background: #eee;
+      padding: 0.5rem;
+      display: flex;
+      justify-content: space-between;
+      border-radius: 6px;
+    }
+
+    .remove-btn {
+      background: #f44336;
+      border: none;
+      padding: 0.3rem 0.6rem;
+      color: white;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Web Dev Challenge</h1>
+  </header>
+
+  <div class="container">
+    <!-- Contact Form -->
+    <form id="contactForm">
+      <h2>Contact Form</h2>
+      <label for="name">Name *</label>
+      <input type="text" id="name" required />
+
+      <label for="email">Email *</label>
+      <input type="email" id="email" required />
+
+      <label for="message">Message</label>
+      <textarea id="message" rows="4"></textarea>
+
+      <button type="submit">Submit</button>
+
+      <!-- Success Message -->
+      <p id="formMessage">Form submitted successfully!</p>
+    </form>
+
+    <!-- To-Do List -->
+    <div class="todo">
+      <h2>To-Do List</h2>
+      <input type="text" id="taskInput" placeholder="Add a new task" />
+      <button onclick="addTask()">Add</button>
+      <ul id="taskList"></ul>
+    </div>
+  </div>
+
+<script>
+  const initialTasks = [];
+  const taskList = document.getElementById("taskList");
+  function createTaskItem(taskText) {
+    const li = document.createElement("li");
+    li.textContent = taskText;
+
+    const removeBtn = document.createElement("button");
+    removeBtn.textContent = "Remove";
+    removeBtn.className = "remove-btn";
+    removeBtn.onclick = function () {
+      li.remove();
+    };
+
+    li.appendChild(removeBtn);
+    taskList.appendChild(li);
+  }
+  window.onload = function () {
+    initialTasks.forEach(task => createTaskItem(task));
+  };
+  function addTask() {
+    const taskInput = document.getElementById("taskInput");
+    const taskValue = taskInput.value.trim();
+
+    if (taskValue === "") return;
+
+    createTaskItem(taskValue);
+    taskInput.value = "";
+  }
+  document.getElementById("contactForm").addEventListener("submit", function(e) {
+    e.preventDefault(); // Prevent page reload
+    const formMessage = document.getElementById("formMessage");
+    formMessage.style.display = "block";
+    this.reset();
+  });
+</script>
+
+</body>
+</html>
